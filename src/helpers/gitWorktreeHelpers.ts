@@ -9,6 +9,7 @@ import {
     shouldOpenNewVscodeWindow,
     shouldAutoPushAfterWorktreeCreation,
     shouldAutoPullAfterWorktreeCreation,
+    resolvePathVariables,
 } from "./helpers";
 import logger from "./logger";
 import { existsRemoteBranch, isBareRepository, hasSubmodules, pullSubmodules } from "./gitHelpers";
@@ -292,7 +293,13 @@ export const calculateNewWorktreePath = async (workspaceFolder: string, branch: 
         if (worktreesDirPath) {
             const topLevelPath = await getGitTopLevel(workspaceFolder);
             const repositoryName = await getFileFromPath(topLevelPath);
-            const path = `${worktreesDirPath}/${repositoryName}/${branch}`;
+            // Resolve variables like ${userHome}, ${workspaceFolderBasename}, ${repositoryName}, etc.
+            const resolvedWorktreesDirPath = resolvePathVariables(
+                worktreesDirPath as string,
+                topLevelPath,
+                repositoryName
+            );
+            const path = `${resolvedWorktreesDirPath}/${branch}`;
 
             // check if directory exists
             if (fs.existsSync(path)) {

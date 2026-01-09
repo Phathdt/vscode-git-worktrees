@@ -75,7 +75,7 @@
                     "vsCodeGitWorktrees.worktrees.dir.path": {
                         "type": "string",
                         "default": null,
-                        "description": "Define a directory for all worktrees between your projects"
+                        "description": "Define a directory for all worktrees. Supports variables: ${userHome}, ${workspaceFolder}, ${workspaceFolderBasename}, ${repositoryName}. Examples: ${userHome}/worktrees/${repositoryName} or ../${workspaceFolderBasename}_worktree"
                     }
                 }
             },
