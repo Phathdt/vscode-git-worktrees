@@ -243,7 +243,7 @@ export const worktreeSearchPath: string | null = vscode.workspace
 /**
  * Sanitizes a branch name for use in filesystem paths.
  * Replaces forward slashes with a special delimiter to avoid nested directories.
- * e.g., "feat/abc" becomes "feat-0-abc"
+ * e.g., "feat/abc" becomes "feat__abc"
  */
 export const sanitizeBranchNameForPath = (branchName: string): string => {
     return branchName.replace(/\//g, BRANCH_SLASH_REPLACEMENT);

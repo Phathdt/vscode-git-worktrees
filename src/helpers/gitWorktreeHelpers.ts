@@ -290,7 +290,7 @@ const getGitCommonDirPath = async (workspaceFolder: string) => {
 
 export const calculateNewWorktreePath = async (workspaceFolder: string, branch: string) => {
     try {
-        // Sanitize branch name to avoid nested directories (e.g., feat/abc -> feat-0-abc)
+        // Sanitize branch name to avoid nested directories (e.g., feat/abc -> feat__abc)
         const sanitizedBranch = sanitizeBranchNameForPath(branch);
 
         // If a worktrees path is defined, we need to move the new worktree there

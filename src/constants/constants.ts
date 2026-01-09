@@ -14,5 +14,5 @@ export const DEMO_URL =
     "https://github.com/alexiszamanidis/vscode-git-worktrees#-features--operations";
 
 // Special key to replace forward slashes in branch names for filesystem paths
-// e.g., "feat/abc" becomes "feat-0-abc"
-export const BRANCH_SLASH_REPLACEMENT = "-0-";
+// e.g., "feat/abc" becomes "feat__abc"
+export const BRANCH_SLASH_REPLACEMENT = "__";
