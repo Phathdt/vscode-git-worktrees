@@ -10,6 +10,7 @@ import {
     shouldAutoPushAfterWorktreeCreation,
     shouldAutoPullAfterWorktreeCreation,
     resolvePathVariables,
+    sanitizeBranchNameForPath,
 } from "./helpers";
 import logger from "./logger";
 import { existsRemoteBranch, isBareRepository, hasSubmodules, pullSubmodules } from "./gitHelpers";
@@ -289,6 +290,9 @@ const getGitCommonDirPath = async (workspaceFolder: string) => {
 
 export const calculateNewWorktreePath = async (workspaceFolder: string, branch: string) => {
     try {
+        // Sanitize branch name to avoid nested directories (e.g., feat/abc -> feat-0-abc)
+        const sanitizedBranch = sanitizeBranchNameForPath(branch);
+
         // If a worktrees path is defined, we need to move the new worktree there
         if (worktreesDirPath) {
             const topLevelPath = await getGitTopLevel(workspaceFolder);
@@ -299,7 +303,7 @@ export const calculateNewWorktreePath = async (workspaceFolder: string, branch: 
                 topLevelPath,
                 repositoryName
             );
-            const path = `${resolvedWorktreesDirPath}/${branch}`;
+            const path = `${resolvedWorktreesDirPath}/${sanitizedBranch}`;
 
             // check if directory exists
             if (fs.existsSync(path)) {
@@ -325,7 +329,7 @@ export const calculateNewWorktreePath = async (workspaceFolder: string, branch: 
             path = removeLastDirectoryInURL(path);
         }
 
-        path = `${path}/${branch}`;
+        path = `${path}/${sanitizedBranch}`;
 
         return path;
     } catch (e: any) {

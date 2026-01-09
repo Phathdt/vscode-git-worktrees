@@ -240,6 +240,15 @@ export const worktreeSearchPath: string | null = vscode.workspace
  *
  * Also converts relative paths to absolute paths based on workspaceFolder.
  */
+/**
+ * Sanitizes a branch name for use in filesystem paths.
+ * Replaces forward slashes with a special delimiter to avoid nested directories.
+ * e.g., "feat/abc" becomes "feat-0-abc"
+ */
+export const sanitizeBranchNameForPath = (branchName: string): string => {
+    return branchName.replace(/\//g, "-0-");
+};
+
 export const resolvePathVariables = (
     pathStr: string,
     workspaceFolder?: string,
