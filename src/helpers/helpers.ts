@@ -6,7 +6,7 @@ import { promisify } from "util";
 import { pipeline as pipelineCallback } from "stream";
 
 import { SpawnOptionsWithoutStdio, spawn } from "child_process";
-import { EXTENSION_ID, DEMO_URL } from "../constants/constants";
+import { EXTENSION_ID, DEMO_URL, BRANCH_SLASH_REPLACEMENT } from "../constants/constants";
 import { showInformationMessageWithButton } from "./vsCodeHelpers";
 import { createReadStream, createWriteStream, promises } from "fs";
 
@@ -246,7 +246,7 @@ export const worktreeSearchPath: string | null = vscode.workspace
  * e.g., "feat/abc" becomes "feat-0-abc"
  */
 export const sanitizeBranchNameForPath = (branchName: string): string => {
-    return branchName.replace(/\//g, "-0-");
+    return branchName.replace(/\//g, BRANCH_SLASH_REPLACEMENT);
 };
 
 export const resolvePathVariables = (
